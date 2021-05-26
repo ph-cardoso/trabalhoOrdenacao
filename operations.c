@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "operations.h"
-#define MAX_RAND 100 // máximo na criação dos números aleatórios com a função rand()
+#define MAX_RAND 100 // valor máximo da criação dos números aleatórios com a função rand()
 
 // limpa o buffer do teclado
 void clean_stdin(){

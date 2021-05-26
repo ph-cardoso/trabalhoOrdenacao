@@ -40,6 +40,7 @@ int main(){
 			case 4:
             
 			break;
+            // imprime o vetor
             case 5:
                 system("cls");
                 printf("||--------------------------------------------------------------|| \n");
@@ -47,6 +48,7 @@ int main(){
                 printf("||--------------------------------------------------------------|| \n\n");
                 imprime_vetor(vet, tam);
 			break;
+            // cria um novo vetor
             case 6:
                 libera_vetor(vet);
                 vet = cria_vetor(ptrTam);

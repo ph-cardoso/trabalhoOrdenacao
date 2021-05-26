@@ -6,6 +6,15 @@ int main(){
 
 printf("olaa");
 printf("teste2");
+printf("teste3");
+printf("teste4");
+
+printf("teste4");
+printf("teste4");
+printf("teste4");
+printf("teste4");
+printf("teste4");
+printf("teste4");
 
     return 0;
 }

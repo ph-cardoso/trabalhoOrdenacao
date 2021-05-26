@@ -8,11 +8,11 @@ int main(){
     int* vet = NULL;
     int tam, op;
 	
-    //Primeira execução: >> Cria um vetor inicial >> Mostra o menu pela primeira vez >> Entra no LOOP
+    // primeira execução: >> Cria um vetor inicial >> Mostra o menu pela primeira vez >> Entra no LOOP
     tam = cria_vetor(vet);
 
-    menu(); //Mostra o menu
-	scanf("%i", &op); //Pega a opção do usuário
+    menu(); //mostra o menu
+	scanf("%i", &op); //pega a opção do usuário
 	do{
 		switch(op)
 		{
@@ -40,8 +40,8 @@ int main(){
                 getchar();
 		}
 		if(op != 0){
-            menu(); //Mostra o menu
-            scanf("%i",&op); //Pega a opção do usuário
+            menu(); //mostra o menu
+            scanf("%i",&op); // pega a opção do usuário
 		}
 	}while(op != 0);
 

@@ -28,7 +28,7 @@ void imprime_vetor(int* vet, int tam){
     int i;
     printf("vet = [");
         for(i=0; i<tam; i++){
-            //if e else apenas para não inserir uma vírgula após a impressão do último elemento
+            // if e else apenas para não inserir uma vírgula após a impressão do último elemento
             if(i!=(tam-1))
                 printf(" %d,", vet[i]);
             else
@@ -50,20 +50,20 @@ int cria_vetor(int* vet){
     printf("Digite o tamanho do vetor a ser criado: ");
     scanf("%d", &tam);
     
-    //Diferenciação da "semente" do rand utilizando a hora do sistema
+    // diferenciação da "semente" do rand utilizando a hora do sistema
     srand(time(NULL));
     // alocação do vetor na memória
     vet = (int*)malloc(sizeof(int)*tam);
 
-    //vet != NULL >> Vetor alocado com sucesso
+    // vet != NULL >> Vetor alocado com sucesso
     if(vet!=NULL){
-        //Inserção de valores aleatórios no vetor
+        // inserção de valores aleatórios no vetor
         for(i=0; i<tam; i++){
             vet[i] = rand() % MAX_RAND;
         }
         printf("\n\nVetor criado com sucesso!\n\n");
         printf("O vetor criado foi:\n");
-        //impressão do vetor
+        // impressão do vetor
         imprime_vetor(vet, tam);
         return tam;
     }

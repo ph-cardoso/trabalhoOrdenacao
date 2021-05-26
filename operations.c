@@ -40,7 +40,7 @@ void imprime_vetor(int* vet, int tam){
 }
 
 // aloca o vetor em memória
-int cria_vetor(int* vet){
+int cria_vetor(int** ptrVet){
     system("cls");
     int tam, i;
 
@@ -53,8 +53,8 @@ int cria_vetor(int* vet){
     // diferenciação da "semente" do rand utilizando a hora do sistema
     srand(time(NULL));
     // alocação do vetor na memória
-    vet = (int*)malloc(sizeof(int)*tam);
-
+    int* vet = (int*)malloc(sizeof(int)*tam);
+    ptrVet = &vet;
     // vet != NULL >> Vetor alocado com sucesso
     if(vet!=NULL){
         // inserção de valores aleatórios no vetor
@@ -64,7 +64,7 @@ int cria_vetor(int* vet){
         printf("\n\nVetor criado com sucesso!\n\n");
         printf("O vetor criado foi:\n");
         // impressão do vetor
-        imprime_vetor(vet, tam);
+        imprime_vetor(*ptrVet, tam);
         return tam;
     }
     else{
@@ -76,6 +76,6 @@ int cria_vetor(int* vet){
 }
 
 // libera o vetor alocado anteriormente
-void libera_vetor(int* vet){
-    free(vet);
+void libera_vetor(int** ptrVet){
+    free(*ptrVet);
 }

@@ -5,11 +5,11 @@
 
 int main(){
     // variáveis
-    int* vet = NULL;
+    int** ptrVet = NULL;
     int tam, op;
 	
     // primeira execução: >> Cria um vetor inicial >> Mostra o menu pela primeira vez >> Entra no LOOP
-    tam = cria_vetor(vet);
+    tam = cria_vetor(ptrVet);
 
     menu(); //mostra o menu
 	scanf("%i", &op); //pega a opção do usuário
@@ -17,7 +17,7 @@ int main(){
 		switch(op)
 		{
 			case 1:
-
+                imprime_vetor(*ptrVet, tam);
 			break;
 			case 2:
 
@@ -45,5 +45,6 @@ int main(){
 		}
 	}while(op != 0);
 
+    libera_vetor(ptrVet);
     return 0;
 }

@@ -5,11 +5,23 @@
 
 int main(){
     // variáveis
-    int** ptrVet = NULL;
-    int tam, op;
+    int op, tam = 0;
+    int* ptrTam = &tam;
+    
+    int* vet = cria_vetor(ptrTam);
+    printf("O vetor criado foi:\n");
+    imprime_vetor(vet, tam);
 	
+    /*
+    printf("\ntam = %d\n", tam);
+    printf("\n*ptrTam = %d\n", *ptrTam);
+    printf("\n*ptrvet0 = %d\n", vet[0]);
+    printf("\n*ptrvet1 = %d\n", vet[1]);
+    printf("\n*ptrvet2 = %d\n", vet[2]);
+    printf("\n*ptrvet3 = %d\n", vet[3]);
+    printf("\n*ptrvet4 = %d\n", vet[4]);
+    */
     // primeira execução: >> Cria um vetor inicial >> Mostra o menu pela primeira vez >> Entra no LOOP
-    tam = cria_vetor(ptrVet);
 
     menu(); //mostra o menu
 	scanf("%i", &op); //pega a opção do usuário
@@ -17,7 +29,7 @@ int main(){
 		switch(op)
 		{
 			case 1:
-                imprime_vetor(*ptrVet, tam);
+                
 			break;
 			case 2:
 
@@ -29,10 +41,19 @@ int main(){
             
 			break;
             case 5:
-
+                system("cls");
+                printf("||--------------------------------------------------------------|| \n");
+                printf("||--------------------------- VETOR ----------------------------|| \n");
+                printf("||--------------------------------------------------------------|| \n\n");
+                imprime_vetor(vet, tam);
+			break;
+            case 6:
+                libera_vetor(vet);
+                vet = cria_vetor(ptrTam);
+                printf("O vetor criado foi:\n");
+                imprime_vetor(vet, tam);
 			break;
 			case 0:
-            
 			break;		
 			default:
                 puts("Opcao Invalida.\n");
@@ -45,6 +66,6 @@ int main(){
 		}
 	}while(op != 0);
 
-    libera_vetor(ptrVet);
+    libera_vetor(vet);
     return 0;
 }

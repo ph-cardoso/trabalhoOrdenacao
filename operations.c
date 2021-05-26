@@ -19,6 +19,7 @@ void menu(){
 	printf("2 - Ordenar utilizando Heapsort (fast).\n");
     printf("3 - Ordenar utilizando Quicksort (passo a passo).\n");
 	printf("4 - Ordenar utilizando Heapsort (passo a passo).\n");
+	printf("5 - Imprimir vetor.\n");
     printf("6 - Criar um novo vetor.\n");
     printf("0 - Sair do programa.\n");
 	printf("\nOpcao: ");
@@ -40,42 +41,40 @@ void imprime_vetor(int* vet, int tam){
 }
 
 // aloca o vetor em memória
-int cria_vetor(int** ptrVet){
+int* cria_vetor(int* tam){
     system("cls");
-    int tam, i;
+    int i;
 
     printf("||--------------------------------------------------------------|| \n");
-    printf("||--------------------------- VETOR ----------------------------|| \n");
+    printf("||------------------------ CRIAR VETOR -------------------------|| \n");
     printf("||--------------------------------------------------------------|| \n\n");
     printf("Digite o tamanho do vetor a ser criado: ");
-    scanf("%d", &tam);
-    
+    scanf("%d", tam);
+
     // diferenciação da "semente" do rand utilizando a hora do sistema
     srand(time(NULL));
+
     // alocação do vetor na memória
-    int* vet = (int*)malloc(sizeof(int)*tam);
-    ptrVet = &vet;
+    int* vet = (int*) calloc((*tam), sizeof(int));
+
     // vet != NULL >> Vetor alocado com sucesso
     if(vet!=NULL){
         // inserção de valores aleatórios no vetor
-        for(i=0; i<tam; i++){
+        for(i=0; i<(*tam); i++){
             vet[i] = rand() % MAX_RAND;
         }
         printf("\n\nVetor criado com sucesso!\n\n");
-        printf("O vetor criado foi:\n");
-        // impressão do vetor
-        imprime_vetor(*ptrVet, tam);
-        return tam;
+        return vet;
     }
     else{
         printf("\n\nErro na criacao do vetor!");
         clean_stdin();
         getchar();
-        return 0;
+        return NULL;
     }
 }
 
 // libera o vetor alocado anteriormente
-void libera_vetor(int** ptrVet){
-    free(*ptrVet);
+void libera_vetor(int* vet){
+    free(vet);
 }

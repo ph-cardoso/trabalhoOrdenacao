@@ -25,21 +25,6 @@ void menu(){
 	printf("\nOpcao: ");
 }
 
-void imprime_vetor(int* vet, int tam){
-    int i;
-    printf("vet = [");
-        for(i=0; i<tam; i++){
-            // if e else apenas para não inserir uma vírgula após a impressão do último elemento
-            if(i!=(tam-1))
-                printf(" %d,", vet[i]);
-            else
-                printf(" %d", vet[i]);
-        }
-        printf(" ]");
-        clean_stdin();
-        getchar();
-}
-
 // aloca o vetor em memória
 int* cria_vetor(int* tam){
     system("cls");
@@ -77,6 +62,22 @@ int* cria_vetor(int* tam){
 // libera o vetor alocado anteriormente
 void libera_vetor(int* vet){
     free(vet);
+}
+
+// imprime o vetor
+void imprime_vetor(int* vet, int tam){
+    int i;
+    printf("vet = [");
+        for(i=0; i<tam; i++){
+            // if e else apenas para não inserir uma vírgula após a impressão do último elemento
+            if(i!=(tam-1))
+                printf(" %d,", vet[i]);
+            else
+                printf(" %d", vet[i]);
+        }
+        printf(" ]");
+        clean_stdin();
+        getchar();
 }
 
 // Quicksort >> particiona

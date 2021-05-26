@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "operations.c"
 
+//TODO: Heapsort Passo a Passo
+//TODO: Quicksort Passo a Passo
 
 int main(){
     // variáveis

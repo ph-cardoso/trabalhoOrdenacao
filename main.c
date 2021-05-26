@@ -28,15 +28,41 @@ int main(){
 	do{
 		switch(op)
 		{
-			case 1:
-                
+			// ordenar utilizando Quicksort (fast)
+            case 1:
+                system("cls");
+                printf("||--------------------------------------------------------------|| \n");
+                printf("||---------------------- QUICKSORT FAST ------------------------|| \n");
+                printf("||--------------------------------------------------------------|| \n\n");
+                printf("Vetor Original:\n");
+                // impressão do vetor antes da ordenação
+                imprime_vetor(vet, tam);
+                printf("\n\nVetor Ordenado com Quicksort:\n");
+                // chamada da função quickSort
+                quickSort(vet, 0, tam-1);
+                // impressão do vetor depois da ordenação
+                imprime_vetor(vet, tam);
 			break;
-			case 2:
-
+			// ordenar utilizando Heapsort (fast)
+            case 2:
+                system("cls");
+                printf("||--------------------------------------------------------------|| \n");
+                printf("||----------------------- HEAPSORT FAST ------------------------|| \n");
+                printf("||--------------------------------------------------------------|| \n\n");
+                printf("Vetor Original:\n");
+                // impressão do vetor antes da ordenação
+                imprime_vetor(vet, tam);
+                printf("\n\nVetor Ordenado com Heapsort:\n");
+                // chamada da função heapSort
+                heapSort(vet, tam);
+                // impressão do vetor depois da ordenação
+                imprime_vetor(vet, tam);
 			break;
+            // ordenar utilizando Quicksort (passo a passo)
             case 3:
 
 			break;
+            // ordenar utilizando Heapsort (passo a passo)
 			case 4:
             
 			break;
@@ -55,6 +81,7 @@ int main(){
                 printf("O vetor criado foi:\n");
                 imprime_vetor(vet, tam);
 			break;
+            // sair do programa
 			case 0:
 			break;		
 			default:

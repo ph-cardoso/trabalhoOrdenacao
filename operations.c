@@ -78,3 +78,73 @@ int* cria_vetor(int* tam){
 void libera_vetor(int* vet){
     free(vet);
 }
+
+// Quicksort >> particiona
+int particiona(int *V, int inicio, int final ){
+    int esq, dir, pivo, aux;
+    esq = inicio;
+    dir = final;
+    pivo = V[inicio];
+    while(esq < dir){
+        while(esq <= final && V[esq] <= pivo)
+            esq++;
+
+        while(dir >= 0 && V[dir] > pivo)
+            dir--;
+
+        if(esq < dir){
+            aux = V[esq];
+            V[esq] = V[dir];
+            V[dir] = aux;
+        }
+    }
+    V[inicio] = V[dir];
+    V[dir] = pivo;
+    //printf("---------------\n");
+    return dir;
+}
+
+// Quicksort
+void quickSort(int *V, int inicio, int fim) {
+    int pivo;
+    if(fim > inicio){
+        pivo = particiona(V, inicio, fim);
+        quickSort(V, inicio, pivo-1);
+        quickSort(V, pivo+1, fim);
+    }
+}
+
+// Heapsort >> cria Heap
+void criaHeap(int *vet, int i, int f){
+    int aux = vet[i];
+    int j = i * 2 + 1;
+    while (j <= f){
+        if(j < f){
+            if(vet[j] < vet[j + 1]){
+                j = j + 1;
+            }
+        }
+        if(aux < vet[j]){
+            vet[i] = vet[j];
+            i = j;
+            j = 2 * i + 1;
+        }else{
+            j = f + 1;
+        }
+    }
+    vet[i] = aux;
+}
+
+// Heapsort >> ordena
+void heapSort(int *vet, int N){
+    int i, aux;
+    for(i=(N - 1)/2; i >= 0; i--){
+        criaHeap(vet, i, N-1);
+    }
+    for (i = N-1; i >= 1; i--){
+        aux = vet[0];
+        vet [0] = vet [i];
+        vet [i] = aux;
+        criaHeap(vet, 0, i - 1);
+    }
+}

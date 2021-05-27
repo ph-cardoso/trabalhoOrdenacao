@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <time.h>
 #include "operations.h"
-#define MAX_RAND 100 // valor máximo da criação dos números aleatórios com a função rand()
+#define MAX_RAND 100 //Valor máximo da criação dos números aleatórios com a função rand()
 
-// limpa o buffer do teclado
+//Limpa o buffer do teclado
 void clean_stdin(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+//Menu principal do programa
 void menu(){
 	system("cls");
     printf("||--------------------------------------------------------------|| \n");
@@ -25,7 +27,155 @@ void menu(){
 	printf("\nOpcao: ");
 }
 
-// aloca o vetor em memória
+//Menu do Quicksort passo a passo
+int* menu_quicksort(){
+	int op, error_flag = 1, error_flag2 = 1, error_flag3 = 1;
+    //Char de comparação
+    char c, c2;
+    //Vetor chave
+    int* vet = (int*) calloc(3, sizeof(int));
+
+    while(error_flag){
+        system("cls");
+        printf("||--------------------------------------------------------------|| \n");
+        printf("||----------------------- MENU QUICKSORT -----------------------|| \n");
+        printf("||--------------------------------------------------------------|| \n\n");
+        printf("PASSOS RELEVANTES:\n");
+        printf("A) Selecao de pivo: apresenta qual elemento foi selecionado e como.\n");
+        printf("B) Troca de elementos: apresenta o valor do pivo, o indice e valor dos elementos a serem trocados.\n");
+        printf("C) Divisao do vetor: mostra como o vetor esta sendo particionado: quais são os indices e elementos de cada parte.\n");
+        printf("\n\nOPCOES:\n");
+        printf("1. Visualizar apenas 1 passo.\n");
+        printf("2. Visualizar 2 passos.\n");
+        printf("3. Visualizar todos os passos.\n");
+        printf("\nOpcao: ");
+        scanf("%i", &op);
+        switch(op){
+            case 1:
+                while(error_flag2){
+                    printf("Digite a letra do passo que deseja visualizar: \n");
+                    clean_stdin();
+                    scanf("%c", &c);
+                    //Transforma o caracterte digitado em maiúscula
+                    toupper(c);
+                    switch(c){
+                        case 'A':
+                            error_flag2 = 0;
+                            vet[0] = 1;
+                        break;
+                        case 'B':
+                            error_flag2 = 0;
+                            vet[1] = 1;
+                        break;
+                        case 'C':
+                            error_flag2 = 0;
+                            vet[2] = 1;
+                        break;
+                        default:
+                            error_flag2 = 1;
+                            puts("Opcao Invalida.\n");
+                            clean_stdin();
+                            getchar();
+                    }
+                }
+                error_flag = 0;
+            break;
+            case 2:
+                while(error_flag2){
+                    printf("Digite a letra do primeiro passo que deseja visualizar: \n");
+                    clean_stdin();
+                    scanf("%c", &c);
+                    //Transforma o caracterte digitado em maiúscula
+                    toupper(c);
+                    switch(c){
+                        case 'A':
+                            error_flag2 = 0;
+                            vet[0] = 1;
+                        break;
+                        case 'B':
+                            error_flag2 = 0;
+                            vet[1] = 1;
+                        break;
+                        case 'C':
+                            error_flag2 = 0;
+                            vet[2] = 1;
+                        break;
+                        default:
+                            error_flag2 = 1;
+                            puts("Opcao Invalida.\n");
+                            clean_stdin();
+                            getchar();
+                    }
+                }
+                while(error_flag3){
+                    printf("Digite a letra do segundo passo que deseja visualizar: \n");
+                    clean_stdin();
+                    scanf("%c", &c2);
+                    //Transforma o caracterte digitado em maiúscula
+                    toupper(c);
+                    switch(c){
+                        case 'A':
+                            error_flag3 = 0;
+                            vet[0] = 1;
+                        break;
+                        case 'B':
+                            error_flag3 = 0;
+                            vet[1] = 1;
+                        break;
+                        case 'C':
+                            error_flag3 = 0;
+                            vet[2] = 1;
+                        break;
+                        default:
+                            error_flag3 = 1;
+                            puts("Opcao Invalida.\n");
+                            clean_stdin();
+                            getchar();
+                    }
+                }
+                error_flag = 0;
+            break;
+            case 3:
+                vet[0] = 1;
+                vet[1] = 1;
+                vet[2] = 1;
+                error_flag = 0;
+            break;
+            default:
+                error_flag = 1;
+                puts("Opcao Invalida.\n");
+                clean_stdin();
+                getchar();
+        }
+    }
+    return vet;
+}
+
+/*
+//Menu do Heapsort passo a passo
+void menu_heapsort(int hs_f1, int hs_f2){
+	system("cls");
+    printf("||--------------------------------------------------------------|| \n");
+    printf("||----------------------- MENU HEAPSORT ------------------------|| \n");
+    printf("||--------------------------------------------------------------|| \n\n");
+    printf("PASSOS RELEVANTES:\n");
+    printf("A) Os passos para (re)construcao do heap, mostrando o elemento em questao, seus filhos e a troca sendo feita.\n");
+    printf("B) O elemento selecionado a cada passo pelo heapsort.\n");
+    printf("\n\nOPCOES:\n");
+    printf("1. Visualizar apenas 1 passo.\n");
+    printf("2. Visualizar todos os passos.\n");
+	printf("\nOpcao: ");
+}
+*/
+
+//Reseta o valor das flags do Quicksort
+void reset_vetKey(int* vet){
+    vet[0] = 0;
+    vet[1] = 0;
+    vet[2] = 0;
+}
+
+//Aloca o vetor em memória
 int* cria_vetor(int* tam){
     system("cls");
     int i;
@@ -36,15 +186,15 @@ int* cria_vetor(int* tam){
     printf("Digite o tamanho do vetor a ser criado: ");
     scanf("%d", tam);
 
-    // diferenciação da "semente" do rand utilizando a hora do sistema
+    //Diferenciação da "semente" do rand utilizando a hora do sistema
     srand(time(NULL));
 
-    // alocação do vetor na memória
+    //Alocação do vetor na memória
     int* vet = (int*) calloc((*tam), sizeof(int));
 
-    // vet != NULL >> Vetor alocado com sucesso
+    //vet != NULL >> Vetor alocado com sucesso
     if(vet!=NULL){
-        // inserção de valores aleatórios no vetor
+        //Inserção de valores aleatórios no vetor
         for(i=0; i<(*tam); i++){
             vet[i] = rand() % MAX_RAND;
         }
@@ -59,17 +209,17 @@ int* cria_vetor(int* tam){
     }
 }
 
-// libera o vetor alocado anteriormente
+//Libera o vetor alocado anteriormente
 void libera_vetor(int* vet){
     free(vet);
 }
 
-// imprime o vetor
+//Imprime o vetor
 void imprime_vetor(int* vet, int tam){
     int i;
     printf("vet = [");
         for(i=0; i<tam; i++){
-            // if e else apenas para não inserir uma vírgula após a impressão do último elemento
+            //If e else apenas para não inserir uma vírgula após a impressão do último elemento
             if(i!=(tam-1))
                 printf(" %d,", vet[i]);
             else
@@ -80,7 +230,7 @@ void imprime_vetor(int* vet, int tam){
         getchar();
 }
 
-// Quicksort >> particiona
+//Quicksort >> particiona
 int particiona(int *V, int inicio, int final ){
     int esq, dir, pivo, aux;
     esq = inicio;
@@ -101,11 +251,10 @@ int particiona(int *V, int inicio, int final ){
     }
     V[inicio] = V[dir];
     V[dir] = pivo;
-    //printf("---------------\n");
     return dir;
 }
 
-// Quicksort
+//Quicksort
 void quickSort(int *V, int inicio, int fim) {
     int pivo;
     if(fim > inicio){
@@ -115,7 +264,7 @@ void quickSort(int *V, int inicio, int fim) {
     }
 }
 
-// Heapsort >> cria Heap
+//Heapsort >> cria Heap
 void criaHeap(int *vet, int i, int f){
     int aux = vet[i];
     int j = i * 2 + 1;
@@ -136,7 +285,7 @@ void criaHeap(int *vet, int i, int f){
     vet[i] = aux;
 }
 
-// Heapsort >> ordena
+//Heapsort >> ordena
 void heapSort(int *vet, int N){
     int i, aux;
     for(i=(N - 1)/2; i >= 0; i--){

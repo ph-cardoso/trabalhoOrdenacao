@@ -59,25 +59,38 @@ int main(){
             //Ordenar utilizando Quicksort (passo a passo)
             case 3:
                 //Chama o menu com passos e opções de visualização
-                reset_vetKey(vetKey);
                 vetKey = menu_quicksort();
+                printf("\nflag3\n");
                 system("cls");
                 printf("||--------------------------------------------------------------|| \n");
                 printf("||----------------- QUICKSORT PASSO A PASSO --------------------|| \n");
                 printf("||--------------------------------------------------------------|| \n\n");
+                
+                /*
                 printf("vetKey[0] = %d\n", vetKey[0]);
                 printf("vetKey[1] = %d\n", vetKey[1]);
                 printf("vetKey[2] = %d\n", vetKey[2]);
+                */
                 clean_stdin();
                 getchar();
+                libera_vetor(vetKey);
 			break;
             
             //Ordenar utilizando Heapsort (passo a passo)
 			case 4:
+                vetKey = menu_heapsort();
                 system("cls");
                 printf("||--------------------------------------------------------------|| \n");
                 printf("||------------------ HEAPSORT PASSO A PASSO --------------------|| \n");
                 printf("||--------------------------------------------------------------|| \n\n");
+                
+                /*
+                printf("vetKey[0] = %d\n", vetKey[0]);
+                printf("vetKey[1] = %d\n", vetKey[1]);
+                */
+                clean_stdin();
+                getchar();
+                libera_vetor(vetKey);
 			break;
             
             //Imprime o vetor

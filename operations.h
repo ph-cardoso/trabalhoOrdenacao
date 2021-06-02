@@ -8,10 +8,7 @@ void menu();
 
 //Menus com atribuição de flag
 int* menu_quicksort();
-//void menu_heapsort(int*, int*);
-
-//Reset das vetKey >> Vetor com as flags do que deve ser mostrado no passo a passo
-void reset_vetKey(int*);
+int* menu_heapsort();
 
 //Tratamento do Vetor
 int* cria_vetor(int*);

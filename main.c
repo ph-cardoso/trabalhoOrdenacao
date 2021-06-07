@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "operations.c"
 
 //TODO: Heapsort Passo a Passo
@@ -7,22 +8,22 @@
 
 int main(){
     //Variáveis
-    int op, tam = 0;
-    printf("\nflag1\n");
-    int* vetKey;
-    //Ponteiro que aponta para o tamanho do vetor
-    int* ptrTam = &tam;
+    int op, tam = 0; //Opção do menu e tamanho do vetor
+    clock_t t; //Variáveis para cálculo do tempo de execução do algoritmo
+    double time_required;
+    int* vetKey; //Vetor que armazena as opções de visualização do passo a passo
+    int* ptrTam = &tam; //Ponteiro que aponta para o tamanho do vetor
 
     //Criação do vetor
     int* vet = cria_vetor(ptrTam);
     printf("O vetor criado foi:\n");
-    imprime_vetor(vet, tam);
-    printf("\nflag4\n");
+    imprime_vetor(vet, tam, 0);
+
     //Primeira execução: >> Cria um vetor inicial >> Mostra o menu pela primeira vez >> Entra no LOOP
     menu(); //Mostra o menu
 	scanf("%i", &op); //Pega a opção do usuário
 	do{
-		switch(op)
+        switch(op)
 		{
 			//Ordenar utilizando Quicksort (fast)
             case 1:
@@ -31,13 +32,18 @@ int main(){
                 printf("||---------------------- QUICKSORT FAST ------------------------|| \n");
                 printf("||--------------------------------------------------------------|| \n\n");
                 printf("Vetor Original:\n");
-                //Impressão do vetor antes da ordenação
-                imprime_vetor(vet, tam);
+                imprime_vetor(vet, tam, 0); //Impressão do vetor antes da ordenação
+                t = clock(); //Clock Inicial
+                quickSort(vet, 0, tam-1); //Chamada da função quickSort
+                clean_stdin();
+                //getchar();
+                t = clock() - t; //Clock final - inicial
                 printf("\n\nVetor Ordenado com Quicksort:\n");
-                //Chamada da função quickSort
-                quickSort(vet, 0, tam-1);
-                //Impressão do vetor depois da ordenação
-                imprime_vetor(vet, tam);
+                imprime_vetor(vet, tam, 0); //Impressão do vetor depois da ordenação
+                time_required = ((double)t)*1000/CLOCKS_PER_SEC; //Tempo em milisegundos   
+                printf("\nTempo de execucao: %f ms\n", time_required);
+                clean_stdin();
+                getchar();
 			break;
 			
             //Ordenar utilizando Heapsort (fast)
@@ -47,13 +53,18 @@ int main(){
                 printf("||----------------------- HEAPSORT FAST ------------------------|| \n");
                 printf("||--------------------------------------------------------------|| \n\n");
                 printf("Vetor Original:\n");
-                //Impressão do vetor antes da ordenação
-                imprime_vetor(vet, tam);
-                printf("\n\nVetor Ordenado com Heapsort:\n");
-                //Chamada da função heapSort
-                heapSort(vet, tam);
-                //Impressão do vetor depois da ordenação
-                imprime_vetor(vet, tam);
+                imprime_vetor(vet, tam, 0); //Impressão do vetor antes da ordenação
+                t = clock(); //Clock Inicial
+                heapSort(vet, tam); //Chamada da função heapSort
+                clean_stdin();
+                //getchar();
+                t = clock() - t; //Clock final - inicial
+                printf("\n\nVetor Ordenado com Heapsort:\n");               
+                imprime_vetor(vet, tam, 0); //Impressão do vetor depois da ordenação
+                time_required = ((double)t)*1000/CLOCKS_PER_SEC; //Tempo em milisegundos                
+                printf("\nTempo de execucao: %f ms\n", time_required);
+                clean_stdin();
+                getchar();
 			break;
             
             //Ordenar utilizando Quicksort (passo a passo)
@@ -65,6 +76,14 @@ int main(){
                 printf("||--------------------------------------------------------------|| \n");
                 printf("||----------------- QUICKSORT PASSO A PASSO --------------------|| \n");
                 printf("||--------------------------------------------------------------|| \n\n");
+                printf("Vetor Original:\n");
+                //Impressão do vetor antes da ordenação
+                imprime_vetor(vet, tam, 0);
+                printf("\n\nVetor Ordenado com Quicksort:\n");
+                //Chamada da função quickSort_passo
+                quickSort_passo(vet, 0, tam-1, vetKey);
+                //Impressão do vetor depois da ordenação
+                imprime_vetor(vet, tam, 0);
                 
                 /*
                 printf("vetKey[0] = %d\n", vetKey[0]);
@@ -99,7 +118,7 @@ int main(){
                 printf("||--------------------------------------------------------------|| \n");
                 printf("||--------------------------- VETOR ----------------------------|| \n");
                 printf("||--------------------------------------------------------------|| \n\n");
-                imprime_vetor(vet, tam);
+                imprime_vetor(vet, tam, 0);
 			break;
             
             //Cria um novo vetor
@@ -107,7 +126,7 @@ int main(){
                 libera_vetor(vet);
                 vet = cria_vetor(ptrTam);
                 printf("O vetor criado foi:\n");
-                imprime_vetor(vet, tam);
+                imprime_vetor(vet, tam, 0);
 			break;
             
             //Sair do programa

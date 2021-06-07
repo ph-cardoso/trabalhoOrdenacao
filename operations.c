@@ -254,10 +254,10 @@ void libera_vetor(int* vet){
 }
 
 //Imprime o vetor
-void imprime_vetor(int* vet, int tam){
+void imprime_vetor(int* vet, int tam, int inicio){
     int i;
     printf("vet = [");
-        for(i=0; i<tam; i++){
+        for(i=inicio; i<tam; i++){
             //If e else apenas para não inserir uma vírgula após a impressão do último elemento
             if(i!=(tam-1))
                 printf(" %d,", vet[i]);
@@ -335,5 +335,63 @@ void heapSort(int *vet, int N){
         vet [0] = vet [i];
         vet [i] = aux;
         criaHeap(vet, 0, i - 1);
+    }
+}
+
+//Quicksort passo a passo
+int particiona_passo(int* V, int inicio, int final, int* vetKey){
+    int esq, dir, pivo, aux;
+    esq = inicio;
+    dir = final;
+    pivo = V[inicio];
+    while(esq < dir){
+        while(esq <= final && V[esq] <= pivo)
+            esq++;
+
+        while(dir >= 0 && V[dir] > pivo)
+            dir--;
+
+        if(esq < dir){
+            if(vetKey[1] == 1){
+                printf("\nTROCA DE ELEMENTOS:\n");
+                printf("\nValor do Pivo: %i\n", pivo);
+                printf("Indice dos elementos a serem trocados: %i e %i\n", esq, dir);
+                printf("Valor dos elementos que estao sendo trocados: vet[%i] = %i e vet[%i] = %i\n", esq, V[esq], dir, V[dir]);
+            }
+            aux = V[esq];
+            V[esq] = V[dir];
+            V[dir] = aux;
+        }
+    }
+    V[inicio] = V[dir];
+    V[dir] = pivo;
+    return dir;
+}
+
+void quickSort_passo(int* V, int inicio, int fim, int* vetKey){
+    int pivo;
+    if(fim > inicio){
+        pivo = particiona_passo(V, inicio, fim, vetKey);
+        if(vetKey[0] == 1){
+            printf("\nSELECAO DE PIVO:\n", pivo, V[pivo]);
+            printf("\nPivo selecionado: vet[%i] = %i\n", pivo, V[pivo]);
+        }
+        if(vetKey[2] == 1){
+            printf("\nDIVISAO DO VETOR:\n");
+            printf("Vetor:\n");
+            imprime_vetor(V, (fim-inicio+1), 0);
+            printf("Parte 1 (Inicio => Pivo-1):\n");
+            printf("Elemento Inicial: vet[%i] = %i\n", inicio, V[inicio]);
+            printf("Elemento Final: vet[%i] = %i\n", pivo-1, V[pivo-1]);
+            printf("Vetor:\n");
+            imprime_vetor(V, (pivo-inicio), inicio);
+            printf("\nParte 2 (Pivo+1 => Fim):\n");
+            printf("Elemento Inicial: vet[%i] = %i\n", pivo+1, V[pivo+1]);
+            printf("Elemento Final: vet[%i] = %i\n", fim, V[fim]);
+            printf("Vetor:\n");
+            imprime_vetor(V, (fim-pivo+1), pivo+1);
+        }
+        quickSort_passo(V, inicio, pivo-1, vetKey);
+        quickSort_passo(V, pivo+1, fim, vetKey);
     }
 }

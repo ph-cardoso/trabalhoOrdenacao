@@ -17,8 +17,8 @@ void menu(){
     printf("||--------------------------------------------------------------|| \n");
     printf("||---------------------------- MENU ----------------------------|| \n");
     printf("||--------------------------------------------------------------|| \n\n");
-    printf("1 - Ordenar utilizando Quicksort (fast).\n");
-	printf("2 - Ordenar utilizando Heapsort (fast).\n");
+    printf("1 - Ordenar utilizando Quicksort (direto).\n");
+	printf("2 - Ordenar utilizando Heapsort (direto).\n");
     printf("3 - Ordenar utilizando Quicksort (passo a passo).\n");
 	printf("4 - Ordenar utilizando Heapsort (passo a passo).\n");
 	printf("5 - Imprimir vetor.\n");
@@ -265,8 +265,6 @@ void imprime_vetor(int* vet, int tam, int inicio){
                 printf(" %d", vet[i]);
         }
         printf(" ]");
-        clean_stdin();
-        getchar();
 }
 
 //Quicksort >> particiona
@@ -339,59 +337,162 @@ void heapSort(int *vet, int N){
 }
 
 //Quicksort passo a passo
-int particiona_passo(int* V, int inicio, int final, int* vetKey){
+int particiona_passo(int* V, int inicio, int final, int* vetKey, int tam){
     int esq, dir, pivo, aux;
     esq = inicio;
     dir = final;
     pivo = V[inicio];
+    if(vetKey[0]==1){
+      printf("\nSELECAO DE PIVO:\n");
+      imprime_vetor(V,tam,0);
+      printf("\nPivo Selecionado: vet[%d]=%d\n", inicio, V[inicio]);
+    }
     while(esq < dir){
-        while(esq <= final && V[esq] <= pivo)
+        while(esq <= final && V[esq] <= pivo){
             esq++;
+        }
 
-        while(dir >= 0 && V[dir] > pivo)
+        while(dir >= 0 && V[dir] > pivo){
             dir--;
+        }
 
         if(esq < dir){
             if(vetKey[1] == 1){
                 printf("\nTROCA DE ELEMENTOS:\n");
-                printf("\nValor do Pivo: %i\n", pivo);
-                printf("Indice dos elementos a serem trocados: %i e %i\n", esq, dir);
+                imprime_vetor(V,tam,0);
+                printf("\nPivo: %d\n", pivo);
                 printf("Valor dos elementos que estao sendo trocados: vet[%i] = %i e vet[%i] = %i\n", esq, V[esq], dir, V[dir]);
             }
             aux = V[esq];
             V[esq] = V[dir];
             V[dir] = aux;
+            if(vetKey[1] == 1){
+                imprime_vetor(V,tam,0);
+                printf("\n");
+            }
         }
+    }
+    if(vetKey[1] == 1){
+        printf("\nTROCA DE ELEMENTOS DEPOIS DA COMPARACAO:\n");
+        imprime_vetor(V,tam,0);
+        printf("\nPivo: %d\n", pivo);
+        printf("vet[%i]=%d recebe vet[%i]=%d\n", inicio, V[inicio], dir, V[dir]);
     }
     V[inicio] = V[dir];
     V[dir] = pivo;
+    if(vetKey[1] == 1){
+        imprime_vetor(V,tam,0);
+        printf("\n");
+    }
     return dir;
 }
 
-void quickSort_passo(int* V, int inicio, int fim, int* vetKey){
+void quickSort_passo(int* V, int inicio, int fim, int* vetKey, int tam){
     int pivo;
     if(fim > inicio){
-        pivo = particiona_passo(V, inicio, fim, vetKey);
+        pivo = particiona_passo(V, inicio, fim, vetKey, tam);
         if(vetKey[0] == 1){
             printf("\nSELECAO DE PIVO:\n", pivo, V[pivo]);
+            imprime_vetor(V,tam,0);
             printf("\nPivo selecionado: vet[%i] = %i\n", pivo, V[pivo]);
         }
         if(vetKey[2] == 1){
             printf("\nDIVISAO DO VETOR:\n");
-            printf("Vetor:\n");
-            imprime_vetor(V, (fim-inicio+1), 0);
-            printf("Parte 1 (Inicio => Pivo-1):\n");
+            imprime_vetor(V, tam, 0);
+            printf("\n\nParte 1 (Inicio => Pivo-1):\n");
             printf("Elemento Inicial: vet[%i] = %i\n", inicio, V[inicio]);
-            printf("Elemento Final: vet[%i] = %i\n", pivo-1, V[pivo-1]);
-            printf("Vetor:\n");
-            imprime_vetor(V, (pivo-inicio), inicio);
-            printf("\nParte 2 (Pivo+1 => Fim):\n");
-            printf("Elemento Inicial: vet[%i] = %i\n", pivo+1, V[pivo+1]);
+            if(pivo!=inicio)
+                printf("Elemento Final: vet[%i] = %i\n", pivo-1, V[pivo-1]);
+            imprime_vetor(V, pivo, inicio);
+            printf("\n\nParte 2 (Pivo+1 => Fim):\n");
+            if(pivo!=tam-1)
+                printf("Elemento Inicial: vet[%i] = %i\n", pivo+1, V[pivo+1]);
             printf("Elemento Final: vet[%i] = %i\n", fim, V[fim]);
-            printf("Vetor:\n");
-            imprime_vetor(V, (fim-pivo+1), pivo+1);
+            imprime_vetor(V, (tam-pivo), pivo+1);
+            printf("\n");
         }
-        quickSort_passo(V, inicio, pivo-1, vetKey);
-        quickSort_passo(V, pivo+1, fim, vetKey);
+        quickSort_passo(V, inicio, pivo-1, vetKey, tam);
+        quickSort_passo(V, pivo+1, fim, vetKey, tam);
     }
+}
+
+//Heapsort passo a passo
+void criaHeap_passo(int *vet, int i, int f, int* vetKey, int N, int* ptrComp, int* ptrMov){
+    int aux = vet[i];
+    int j = i * 2 + 1; //Primeiro filho
+    
+    while (j <= f){ //Filho está dentro do vetor?
+        if(vetKey[1]==1){
+            printf("\n\nELEMENTO SELECIONADO PELO HEAP:\n");
+            imprime_vetor(vet, N, 0);
+            printf("\nvet[%d]=%d\n", i, vet[i]);
+        }
+        if(j < f){ //Pai tem dois filhos?
+            if(vet[j] < vet[j + 1]){ //Qual filho é maior?
+                j = j + 1; //'j' passa a ser o maior filho
+            }
+            (*ptrComp)++; //Comparacao do If
+        }
+        (*ptrComp)++; //Comparacao do If
+        if(aux < vet[j]){ //Filho maior que o Pai?
+            if(vetKey[0]==1){
+                printf("\nRECONSTRUCAO DO HEAP:\n");
+                imprime_vetor(vet, N, 0);
+                printf("\n\nElemento Pai: vet[%d]=%d\n", i, vet[i]);
+                printf("Elemento Filho que vai ser trocado: vet[%d]=%d\n\n", j, vet[j]);
+            }
+            vet[i] = vet[j]; //Pai passa a ser o filho
+            i = j; //Índice do pai recebe índice do filho
+            j = 2 * i + 1; //Filho do Filho => Repete o ciclo
+            if(vetKey[0]==1){
+                imprime_vetor(vet, N, 0);
+            }
+            (*ptrMov)++;
+        }else{
+            j = f + 1; //Caso o pai seja maior j termina
+        }
+        (*ptrComp)++; //Comparacao do If
+        (*ptrComp)++; //Comparacao do While
+    }
+    (*ptrComp)++; //Comparacao do While de saída
+    vet[i] = aux; //O último vetor substituído recebe o aux que guardava o Pai inicial
+    (*ptrMov)++;
+}
+
+void heapSort_passo(int *vet, int N, int* vetKey){
+    int i, aux, mov = 0, comp = 0, *ptrComp, *ptrMov;
+    ptrComp = &comp;
+    ptrMov = &mov;
+    //Criação do Heap a partir dos dados
+    for(i=(N - 1)/2; i >= 0; i--){
+        criaHeap_passo(vet, i, N-1, vetKey, N, ptrComp, ptrMov);
+        (*ptrComp)++; //Comparacao do for
+    }
+    (*ptrComp)++; //Comparacao do for de saída
+
+    for (i = N-1; i >= 1; i--){
+        //Colocar o maior elemento da Heap na sua respectiva posição no vetor
+        //Maior elemento => Topo da Árvore
+        if(vetKey[0]==1){
+            printf("\n\nPOSICIONAMENTO MAIOR ELEMENTO:\n");
+            imprime_vetor(vet, N, 0);
+            printf("\n\nElemento: vet[%d]=%d\n", 0, vet[0]);
+            printf("Elemento Troca: vet[%d]=%d\n\n", i, vet[i]);
+        }
+        aux = vet[0];
+        vet [0] = vet [i];
+        vet [i] = aux;
+        (*ptrMov)++;
+        if(vetKey[0]==1){
+                imprime_vetor(vet, N, 0);
+            }
+        
+        //Reconstrução do heap
+        criaHeap_passo(vet, 0, i - 1, vetKey, N, ptrComp, ptrMov);
+        (*ptrComp)++; //Comparacao do for
+    }
+    (*ptrComp)++; //Comparacao do for de saída
+
+    printf("\n\nQuantidade de comparacoes: %d\n", *ptrComp);
+    printf("Quantidade de movimentos: %d\n", *ptrMov);
 }

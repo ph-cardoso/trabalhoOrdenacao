@@ -24,5 +24,9 @@ void criaHeap(int*, int, int);
 void heapSort(int*, int);
 
 //Quicksort passo a passo
-int particiona_passo(int*, int, int, int*);
-void quickSort_passo(int*, int, int, int*);
+int particiona_passo(int*, int, int, int*, int);
+void quickSort_passo(int*, int, int, int*, int);
+
+//Heapsort passo a passo
+void criaHeap_passo(int*, int, int, int*, int, int*, int*);
+void heapSort_passo(int*, int, int*);
